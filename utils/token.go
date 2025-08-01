@@ -41,7 +41,6 @@ func CreateRefreshToken(cfg *config.Config, token models.Token) (models.Token, e
 	salt := string(sha1.Sum(nil))[0:16]
 	block, err := aes.NewCipher([]byte(salt))
 	if err != nil {
-		fmt.Println(err.Error())
 		return token, err
 	}
 
@@ -82,7 +81,7 @@ func ValidateToken(cfg *config.Config, accessToken string) (uint, error) {
 		return uint(result["sub"].(float64)), nil
 	}
 
-	return 0, errors.New("token invalid")
+	return 0, errors.New("invalid token")
 }
 
 func ValidateRefreshToken(cfg *config.Config, token models.Token) (uint, error) {
@@ -114,7 +113,7 @@ func ValidateRefreshToken(cfg *config.Config, token models.Token) (uint, error) 
 	}
 
 	if string(plain) != token.AccessToken {
-		return 0, errors.New("token invalid")
+		return 0, errors.New("invalid token")
 	}
 
 	claims := jwt.MapClaims{}
@@ -129,5 +128,5 @@ func ValidateRefreshToken(cfg *config.Config, token models.Token) (uint, error) 
 		return uint(result["sub"].(float64)), nil
 	}
 
-	return 0, errors.New("token invalid")
+	return 0, errors.New("invalid token")
 }

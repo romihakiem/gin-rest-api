@@ -19,11 +19,11 @@ func main() {
 
 	err = db.Migrator().DropTable(models.User{}, models.Category{}, models.Post{}, models.Comment{})
 	if err != nil {
-		log.Fatal("Table dropping failed")
+		log.Fatal("table dropping failed")
 	}
 
 	err = db.AutoMigrate(models.User{}, models.Category{}, models.Post{}, models.Comment{})
 	if err != nil {
-		log.Fatal("Migration failed")
+		log.Fatal("migration failed")
 	}
 }

@@ -24,7 +24,7 @@ func NewMiddleware(cfg *config.Config, rds *redis.Client) *Middleware {
 func (m *Middleware) CheckAuth(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
 	if authHeader == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Authorization header is missing"})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "authorization header is missing"})
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
@@ -45,11 +45,11 @@ func (m *Middleware) CheckAuth(c *gin.Context) {
 
 	_, err = m.rds.Get(c.Request.Context(), strconv.Itoa(int(userId))).Result()
 	if err == redis.Nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "invalid token"})
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	} else if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "invalid token"})
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}

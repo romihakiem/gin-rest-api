@@ -21,7 +21,6 @@ func IsExist(db *gorm.DB, table, field string, value any) bool {
 
 	result := db.Table(table).Where(field+" = ?", value).Count(&count)
 	if result.Error != nil {
-		fmt.Println("Error:", result.Error)
 		return false
 	}
 
@@ -46,7 +45,7 @@ func FormatErrors(errs validator.ValidationErrors) map[string]string {
 		case "gte":
 			message[err.Field()] = fmt.Sprintf("%s must be greater than or equal to %s", err.Field(), err.Param())
 		default:
-			message[err.Field()] = fmt.Sprintf("Validation validations on field %s", err.Field())
+			message[err.Field()] = fmt.Sprintf("validation on field %s", err.Field())
 		}
 	}
 
