@@ -35,7 +35,7 @@ func main() {
 	router.GetDocs(r)
 	router.GetRoute(r, cfg, db, rds)
 
-	srv := &http.Server{Addr: ":8080", Handler: r}
+	srv := &http.Server{Addr: ":" + cfg.APPPort, Handler: r}
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
